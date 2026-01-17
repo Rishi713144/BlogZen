@@ -35,12 +35,12 @@ export const Publish = () => {
     };
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
             <Appbar />
             <div className="flex justify-center w-full pt-8 px-4"> 
                 <div className="max-w-screen-md w-full">
                     
-                    <div className="sticky top-20 z-10 bg-white py-2 border-b border-slate-100 mb-8 flex items-center justify-between">
+                    <div className="sticky top-20 z-10 bg-white dark:bg-slate-900 py-2 border-b border-slate-100 dark:border-slate-800 mb-8 flex items-center justify-between transition-colors duration-300">
                         <div className="flex items-center gap-1">
                             <ToolbarButton 
                                 onMouseDown={() => execCmd('bold')} 
@@ -60,7 +60,7 @@ export const Publish = () => {
                                 icon={<LinkIcon />} 
                                 label="Link" 
                             />
-                            <div className="w-[1px] h-6 bg-slate-200 mx-2" />
+                            <div className="w-[1px] h-6 bg-slate-200 dark:bg-slate-700 mx-2" />
                             <ToolbarButton 
                                 onMouseDown={() => execCmd('formatBlock', 'blockquote')} 
                                 icon={<QuoteIcon />} 
@@ -72,7 +72,9 @@ export const Publish = () => {
                             disabled={loading}
                             onClick={handlePublish}
                             className={`px-6 py-1.5 text-sm font-bold rounded-full transition-all 
-                                ${loading ? "bg-slate-100 text-slate-400" : "bg-black text-white hover:bg-slate-800"}`}
+                                ${loading 
+                                    ? "bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500" 
+                                    : "bg-black dark:bg-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-100"}`}
                         >
                             {loading ? "..." : "Publish"}
                         </button>
@@ -81,14 +83,14 @@ export const Publish = () => {
                     <input 
                         value={title}
                         onChange={(e) => setTitle(e.target.value)} 
-                        className="w-full text-5xl font-bold outline-none placeholder:text-slate-200 text-slate-900 bg-transparent mb-6" 
+                        className="w-full text-5xl font-bold outline-none placeholder:text-slate-200 dark:placeholder:text-slate-700 text-slate-900 dark:text-white bg-transparent mb-6" 
                         placeholder="Title" 
                     />
 
                     <div 
                         ref={contentRef}
                         contentEditable
-                        className="w-full text-xl font-serif outline-none text-slate-800 bg-transparent leading-relaxed min-h-[500px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300 cursor-text" 
+                        className="w-full text-xl font-serif outline-none text-slate-800 dark:text-slate-300 bg-transparent leading-relaxed min-h-[500px] empty:before:content-[attr(data-placeholder)] empty:before:text-slate-300 dark:empty:before:text-slate-600 cursor-text" 
                         data-placeholder="Tell your story..." 
                     />
                 </div>
@@ -102,7 +104,7 @@ const ToolbarButton = ({ icon, label, onMouseDown }: { icon: any, label: string,
     <button 
         type="button"
         onMouseDown={(e) => { e.preventDefault(); onMouseDown(); }}
-        className="p-2 text-slate-500 hover:text-black hover:bg-slate-100 rounded-lg transition-colors"
+        className="p-2 text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
         title={label}
     >
         {icon}

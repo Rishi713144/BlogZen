@@ -6,11 +6,12 @@ import { Blogs } from "./pages/Blogs";
 import { Publish } from './pages/Publish';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { PublicRoute } from './components/PublicRoute';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
 
   return (
-    <>
+    <ThemeProvider>
       <BrowserRouter>
         <Routes>
           <Route element={<PublicRoute />}>
@@ -26,7 +27,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   )
 }
 

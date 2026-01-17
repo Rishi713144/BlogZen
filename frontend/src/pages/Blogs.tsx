@@ -11,7 +11,7 @@ export const Blogs = () => {
     const [selectedTab, setSelectedTab] = useState("Relevant");
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white dark:bg-slate-900 transition-colors duration-300">
             <Appbar />
             
             <main className="max-w-screen-xl mx-auto px-6 grid grid-cols-12 gap-16 py-10">
@@ -20,20 +20,20 @@ export const Blogs = () => {
                 <section className="col-span-12 lg:col-span-8">
                     
                     {/* Dynamic Navigation Tabs */}
-                    <div className="flex items-center space-x-8 border-b border-slate-100 mb-10 overflow-x-auto no-scrollbar">
+                    <div className="flex items-center space-x-8 border-b border-slate-100 dark:border-slate-800 mb-10 overflow-x-auto no-scrollbar">
                         {TABS.map(tab => (
                             <button
                                 key={tab}
                                 onClick={() => setSelectedTab(tab)}
-                                className={`pb-4 text-sm font-medium transition-all relative ${
+                                className={`pb-4 text-sm font-medium transition-all relative whitespace-nowrap ${
                                     selectedTab === tab 
-                                    ? "text-slate-900" 
-                                    : "text-slate-400 hover:text-slate-600"
+                                    ? "text-slate-900 dark:text-white" 
+                                    : "text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300"
                                 }`}
                             >
                                 {tab}
                                 {selectedTab === tab && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 animate-in fade-in duration-300" />
+                                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 dark:bg-slate-200 animate-in fade-in duration-300" />
                                 )}
                             </button>
                         ))}
@@ -44,9 +44,9 @@ export const Blogs = () => {
                             {[...Array(3)].map((_, i) => <BlogSkeleton key={i} />)}
                         </div>
                     ) : (
-                        <div className="flex flex-col divide-y divide-slate-50">
+                        <div className="flex flex-col divide-y divide-slate-50 dark:divide-slate-800">
                             {blogs.map((blog) => (
-                                <div key={blog.id} className="transition-all hover:bg-slate-50/50 -mx-4 px-4 rounded-xl">
+                                <div key={blog.id} className="transition-all hover:bg-slate-50/50 dark:hover:bg-slate-800/50 -mx-4 px-4 rounded-xl">
                                     <BlogCard
                                         id={blog.id}
                                         authorName={blog.author.name || "Anonymous"}

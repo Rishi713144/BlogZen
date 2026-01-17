@@ -27,21 +27,21 @@ const getCatchPhrase = (name: string) => {
 export const FullBlog = ({ blog }: {blog: Blog}) => {
     const authorName = blog.author?.name || "Anonymous";
     
-    return <div>
+    return <div className="dark:bg-slate-900 min-h-screen">
         <Appbar />
         <div className="flex justify-center">
             <div className="grid grid-cols-12 px-10 w-full max-w-screen-xl pt-12">
                 <div className="col-span-12 md:col-span-8">
-                    <div className="text-5xl font-extrabold">
+                    <div className="text-5xl font-extrabold dark:text-slate-100">
                         {blog.title}
                     </div>
-                    <div className="text-slate-500 pt-2">
+                    <div className="text-slate-500 dark:text-slate-400 pt-2">
                         Post on 2nd December 2023
                     </div>
-                    <div className="pt-4" dangerouslySetInnerHTML={{ __html: blog.content }} />
+                    <div className="pt-4 dark:text-slate-300" dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </div>
                 <div className="col-span-12 md:col-span-4 mt-8 md:mt-0">
-                    <div className="text-slate-600 text-lg">
+                    <div className="text-slate-600 dark:text-slate-400 text-lg">
                         Author
                     </div>
                     <div className="flex w-full mt-4">
@@ -49,10 +49,10 @@ export const FullBlog = ({ blog }: {blog: Blog}) => {
                             <Avatar size="big" name={authorName} />
                         </div>
                         <div>
-                            <div className="text-xl font-bold">
+                            <div className="text-xl font-bold dark:text-slate-100">
                                 {authorName}
                             </div>
-                            <div className="pt-2 text-slate-500">
+                            <div className="pt-2 text-slate-500 dark:text-slate-400">
                                 {getCatchPhrase(authorName)}
                             </div>
                         </div>
