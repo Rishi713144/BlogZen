@@ -10,13 +10,28 @@ export const Blog = () => {
         id: id || ""
     });
 
-    if (loading || !blog) {
+    if (loading) {
         return (
             <div>
                 <Appbar />
                 <div className="h-screen flex flex-col justify-center">
                     <div className="flex justify-center">
                         <Spinner />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!blog) {
+        return (
+            <div>
+                <Appbar />
+                <div className="h-screen flex flex-col justify-center">
+                    <div className="flex justify-center">
+                        <div className="text-xl font-semibold text-slate-700">
+                            Blog not found
+                        </div>
                     </div>
                 </div>
             </div>

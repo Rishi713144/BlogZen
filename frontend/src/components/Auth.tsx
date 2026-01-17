@@ -41,19 +41,19 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
           </div>
         </div>
         <div className="pt-8">
-          {type === "signup" ? <LabelledInput label="Name" placeholder="Rishi K..." onChange={(e) => {
+          {type === "signup" ? <LabelledInput label="Name" placeholder="Rishi K..." value={postInputs.name} onChange={(e) => {
             setPostInputs({
               ...postInputs,
               name: e.target.value
             })
           }} /> : null}
-          <LabelledInput label="Email" placeholder="rishi@gmail.com" onChange={(e) => {
+          <LabelledInput label="Email" placeholder="rishi@gmail.com" value={postInputs.email} onChange={(e) => {
             setPostInputs({
               ...postInputs,
               email: e.target.value
             })
           }} />
-          <LabelledInput label="Password" type={"password"} placeholder="123456" onChange={(e) => {
+          <LabelledInput label="Password" type={"password"} placeholder="123456" value={postInputs.password} onChange={(e) => {
             setPostInputs({
               ...postInputs,
               password: e.target.value
@@ -71,11 +71,12 @@ interface LabelledInputType {
   placeholder: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   type?: string;
+  value?: string;
 }
 
-function LabelledInput({ label, placeholder, onChange, type }: LabelledInputType) {
+function LabelledInput({ label, placeholder, onChange, type, value }: LabelledInputType) {
   return <div>
     <label className="block mb-2 text-sm text-black font-semibold pt-4">{label}</label>
-    <input onChange={onChange} type={type || "text"} id="input" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
+    <input onChange={onChange} type={type || "text"} value={value} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder={placeholder} required />
   </div>
 }

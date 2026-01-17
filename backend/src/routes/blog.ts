@@ -17,7 +17,6 @@ export const blogRouter = new Hono<{
 
 blogRouter.use("/*", async (c, next) => {
     let authHeader = c.req.header("authorization") || "";
-    // Handle Bearer authentication 
     if (authHeader.startsWith("Bearer ")) {
         authHeader = authHeader.split(" ")[1];
     }
@@ -125,6 +124,7 @@ blogRouter.get('/bulk', async (c) => {
 
 blogRouter.get('/:id', async (c) => {
     const id = c.req.param("id");
+    
     // Cleaned up
     const pool = new Pool({ connectionString: c.env.DATABASE_URL })
     const adapter = new PrismaPg(pool)

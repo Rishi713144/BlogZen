@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
-import { sign } from 'hono/jwt'
+import { sign, verify } from 'hono/jwt'
 import { signUpInput, signInInput } from "@rishikonar/medium-common";
 
 export const userRouter = new Hono<{
@@ -14,39 +14,32 @@ export const userRouter = new Hono<{
 
 userRouter.post('/signup', async (c) => {
     try {
-        console.log("Signup request received");
         const body = await c.req.json();
-        console.log("Body parsed:", body);
         const result = signUpInput.safeParse(body);
         if (!result.success) {
-            console.log("Input validation failed:", JSON.stringify(result.error));
-            c.status(400); // Changed to 400
+            c.status(400); 
             return c.json({
                 message: "Inputs not correct",
                 errors: result.error
             })
         }
-        console.log("Initializing Prisma with URL length:", c.env.DATABASE_URL?.length);
         const pool = new Pool({ connectionString: c.env.DATABASE_URL })
         const adapter = new PrismaPg(pool)
         const prisma = new PrismaClient({ adapter })
 
-        console.log("Prisma initialized, creating user...");
         const user = await prisma.user.create({
             data: {
                 email: body.email,
                 password: body.password,
-                name: body.name
+                name: body.name || ""
             }
         })
-        console.log("User created:", user.id);
         const jwt = await sign({
             id: user.id
         }, c.env.JWT_SECRET);
 
         return c.text(jwt)
     } catch (e) {
-        console.log("Critical Error during signup:", e);
         c.status(500); 
         return c.json({
             error: "Internal Server Error",
@@ -89,8 +82,44 @@ userRouter.post('/signin', async (c) => {
 
         return c.text(jwt)
     } catch (e) {
-        console.log(e);
         c.status(411);
         return c.text('Invalid')
     }
 })
+
+userRouter.get('/me', async (c) => {
+    const authHeader = c.req.header("authorization") || "";
+    const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : authHeader;
+
+    try {
+        const user = await verify(token, c.env.JWT_SECRET, "HS256");
+        
+        const pool = new Pool({ connectionString: c.env.DATABASE_URL })
+        const adapter = new PrismaPg(pool)
+        const prisma = new PrismaClient({ adapter })
+
+        const userDetails = await prisma.user.findFirst({
+            where: {
+                id: user.id as string
+            },
+            select: {
+                name: true,
+                email: true
+            }
+        });
+
+        if (!userDetails) {
+            c.status(404);
+            return c.json({ message: "User not found" });
+        }
+
+        return c.json({
+            user: userDetails
+        });
+    } catch(e) {
+        c.status(403);
+        return c.json({
+            message: "You are not logged in"
+        })
+    }
+});

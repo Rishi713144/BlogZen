@@ -4,10 +4,9 @@ import { BACKEND_URL } from "../config";
 
 
 export interface Blog {
-    createdAt: string;
     "content": string;
     "title": string;
-    "id": number
+    "id": string;
     "author": {
         "name": string
     }
@@ -20,11 +19,14 @@ export const useBlog = ({ id }: { id: string }) => {
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/${id}`, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: "Bearer " + localStorage.getItem("token")
             }
         })
             .then(response => {
                 setBlog(response.data.blog);
+                setLoading(false);
+            })
+            .catch(e => {
                 setLoading(false);
             })
     }, [id])
@@ -42,11 +44,14 @@ export const useBlogs = () => {
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: "Bearer " + localStorage.getItem("token")
             }
         })
             .then(response => {
                 setBlogs(response.data.blogs);
+                setLoading(false);
+            })
+            .catch(e => {
                 setLoading(false);
             })
     }, [])
@@ -55,4 +60,27 @@ export const useBlogs = () => {
         loading,
         blogs
     }
+}
+
+export const useUser = () => {
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<{name: string, email: string} | null>(null);
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/user/me`, {
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("token")
+            }
+        })
+        .then(response => {
+            setUser(response.data.user);
+            setLoading(false);
+        })
+        .catch(e => {
+            console.error(e);
+            setLoading(false);
+        });
+    }, []);
+
+    return { loading, user };
 }
