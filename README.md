@@ -103,7 +103,7 @@ This project was built to simulate a real-world engineering environment. By usin
 ## Step-by-Step Setup
 * **Clone The Repository**
 
-1.  git clone [https://github.com/Rishi713144/medium-blog.git](https://github.com/Rishi713144/medium-blog.git)
+1.  git clone [https://github.com/Rishi713144/BlogZen.git](https://github.com/Rishi713144/Blogzen.git)
 2. cd medium-clone
 ---
 * **Install Dependencies**
