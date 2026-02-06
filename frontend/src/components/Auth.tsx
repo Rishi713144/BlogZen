@@ -26,7 +26,7 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     }
   }
 
-  return <div className="h-screen flex justify-center flex-col bg-white dark:bg-slate-900 transition-colors duration-300">
+  return <div className="h-screen flex justify-center flex-col bg-white/50 dark:bg-slate-900/50 backdrop-blur-md transition-colors duration-300">
     <div className="flex justify-center">
       <div>
         <div className="px-10">

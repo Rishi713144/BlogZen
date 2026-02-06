@@ -1,6 +1,6 @@
 
 export const Quote = () => {
-  return <div className="bg-slate-200 dark:bg-slate-800 h-screen flex justify-center flex-col transition-colors duration-300">
+  return <div className="bg-slate-200/50 dark:bg-slate-800/50 backdrop-blur-md h-screen flex justify-center flex-col transition-colors duration-300">
     <div className="flex justify-center">
       <div className="max-w-lg">
         <div className="text-3xl font-bold dark:text-white">
