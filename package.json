@@ -9,7 +9,9 @@
     "build:frontend": "pnpm --filter frontend build",
     "build": "pnpm --filter @rishikonar/medium-common build && pnpm --filter frontend build"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "@prisma/engines",
