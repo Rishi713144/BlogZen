@@ -10,7 +10,9 @@
     "build": "pnpm recursive run build",
     "postinstall": "cd backend && npx prisma generate"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
   "pnpm": {
     "onlyBuiltDependencies": [
       "@prisma/engines",
