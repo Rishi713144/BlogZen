@@ -6,7 +6,9 @@
     "dev:backend": "pnpm --filter backend dev",
     "dev:frontend": "pnpm --filter frontend dev",
     "deploy:backend": "pnpm --filter backend deploy",
-    "build:frontend": "pnpm --filter frontend build"
+    "build:frontend": "pnpm --filter frontend build",
+    "build": "pnpm --filter @rishikonar/medium-common build && pnpm --filter frontend build",
+    "postinstall": "cd backend && npx prisma generate"
   },
   "devDependencies": {},
   "pnpm": {
