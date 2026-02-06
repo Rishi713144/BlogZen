@@ -26,7 +26,7 @@ export const useBlog = ({ id }: { id: string }) => {
                 setBlog(response.data.blog);
                 setLoading(false);
             })
-            .catch(e => {
+            .catch(() => {
                 setLoading(false);
             })
     }, [id])
@@ -51,7 +51,7 @@ export const useBlogs = () => {
                 setBlogs(response.data.blogs);
                 setLoading(false);
             })
-            .catch(e => {
+            .catch(() => {
                 setLoading(false);
             })
     }, [])
@@ -64,7 +64,7 @@ export const useBlogs = () => {
 
 export const useUser = () => {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<{name: string, email: string} | null>(null);
+    const [user, setUser] = useState<{ name: string, email: string } | null>(null);
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/user/me`, {
@@ -72,14 +72,14 @@ export const useUser = () => {
                 Authorization: "Bearer " + localStorage.getItem("token")
             }
         })
-        .then(response => {
-            setUser(response.data.user);
-            setLoading(false);
-        })
-        .catch(e => {
-            console.error(e);
-            setLoading(false);
-        });
+            .then(response => {
+                setUser(response.data.user);
+                setLoading(false);
+            })
+            .catch(e => {
+                console.error(e);
+                setLoading(false);
+            });
     }, []);
 
     return { loading, user };
