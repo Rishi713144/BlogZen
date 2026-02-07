@@ -10,10 +10,10 @@ export const TubesBackground = () => {
 
         const app = TubesCursor(canvasRef.current, {
             tubes: {
-                colors: ["#f967fb", "#53bc28"],
+                colors: ["#f967fb", "#53bc28", "#6958d5"],
                 lights: {
-                    intensity: 200,
-                    colors: ["#83f36e", "#fe8a2e"]
+                    intensity: 500,
+                    colors: ["#83f36e", "#fe8a2e", "#ff008a", "#60aed5"]
                 }
             }
         })
@@ -44,8 +44,8 @@ export const TubesBackground = () => {
                 const w = window.innerWidth
                 const h = window.innerHeight
                 
-                const x = w / 2 + (w * 0.3) * Math.cos(t)
-                const y = h / 2 + (h * 0.3) * Math.sin(2 * t) / 2
+                const x = w / 2 + (w * 0.45) * Math.cos(t)
+                const y = h / 2 + (h * 0.45) * Math.sin(2 * t) / 2
 
                 window.dispatchEvent(new MouseEvent('mousemove', {
                     clientX: x,
