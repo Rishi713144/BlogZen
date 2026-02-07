@@ -1,1 +1,1 @@
-export const BACKEND_URL = import.meta.env.PROD ? "" : "http://127.0.0.1:8787"
+export const BACKEND_URL = import.meta.env.PROD ? "https://backend.blogzen-api-rxh2.workers.dev" : "http://127.0.0.1:8787"
