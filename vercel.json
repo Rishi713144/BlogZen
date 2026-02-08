@@ -9,7 +9,7 @@
       "destination": "/index.html"
     }
   ],
-  "buildCommand": "pnpm install && pnpm run build",
+  "buildCommand": "pnpm install && pnpm -w run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite"
 }
