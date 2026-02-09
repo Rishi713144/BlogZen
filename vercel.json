@@ -2,10 +2,11 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/"
     }
   ],
   "buildCommand": "pnpm install && pnpm -w run build",
   "outputDirectory": "frontend/dist",
   "framework": "vite"
 }
+
