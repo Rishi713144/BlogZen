@@ -6,5 +6,6 @@
     }
   ],
   "buildCommand": "pnpm install && pnpm -w run build",
-  "outputDirectory": "frontend/dist"
+  "outputDirectory": "frontend/dist",
+  "framework": "vite"
 }
