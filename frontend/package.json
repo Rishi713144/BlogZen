@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "pnpm --filter @rishikonar/medium-common build && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
