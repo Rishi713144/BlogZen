@@ -1,11 +1,9 @@
-import { Auth } from "../components/Auth"
-import { Quote } from "../components/Quote"
-import { TubesBackground } from "../components/TubesBackground"
+import { Auth } from "../components/Auth";
+import { Quote } from "../components/Quote";
 
 export const Signin = () => {
-    return <div className="dark bg-slate-950 min-h-screen">
-        <TubesBackground />
-        <div className="grid grid-cols-1 lg:grid-cols-2 relative z-10">
+    return (
+        <div className="bg-white dark:bg-slate-950 min-h-screen grid grid-cols-1 lg:grid-cols-2">
             <div>
                 <Auth type="signin" />
             </div>
@@ -13,5 +11,5 @@ export const Signin = () => {
                 <Quote />
             </div>
         </div>
-    </div>
+    );
 }
