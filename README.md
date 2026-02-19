@@ -124,13 +124,23 @@ Required variables for the Backend (packages/backend/.env):
 * JWT_SECRET: A secure secret for signing tokens.
 ---
 ## 🔮 Future Enhancements
-* [ ] Markdown Editor: Support for rich text editing.
+* [ ] User profiles
 
-* [ ] Engagement: Implement "Claps," comments, and likes.
+* [ ] Follow system
 
-* [ ] Profiles: User profile pages and customizable bios.
+* [ ] Claps / likes
 
-* [ ] Discovery: Search functionality, tagging, and pagination.
+* [ ] Draft system
+
+* [ ] Tags
+
+* [ ] Rich text editor
+
+* [ ] Comment threads
+
+* [ ] REST API
+
+* [ ] JWT auth
 
 
 
