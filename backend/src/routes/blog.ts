@@ -1,15 +1,15 @@
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
 import { createBlogInput, updateBlogInput } from "@rishikonar/medium-common";
-import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { Pool } from 'pg'
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import { Pool } from 'pg';
 
 export const blogRouter = new Hono<{
     Bindings: {
         DATABASE_URL: string;
         JWT_SECRET: string;
-    }, 
+    },
     Variables: {
         userId: string;
     }
@@ -20,7 +20,7 @@ blogRouter.use("/*", async (c, next) => {
     if (authHeader.startsWith("Bearer ")) {
         authHeader = authHeader.split(" ")[1];
     }
-    
+
     try {
         const user = await verify(authHeader, c.env.JWT_SECRET, "HS256");
         if (user) {
@@ -33,7 +33,7 @@ blogRouter.use("/*", async (c, next) => {
                 message: "You are not logged in"
             })
         }
-    } catch(e) {
+    } catch (e) {
         console.log("Auth failed:", e);
         c.status(403);
         return c.json({
@@ -61,7 +61,8 @@ blogRouter.post('/', async (c) => {
         data: {
             title: body.title,
             content: body.content,
-            authorId: authorId
+            authorId: authorId,
+            category: body.category || "General"
         }
     })
 
@@ -87,10 +88,11 @@ blogRouter.put('/', async (c) => {
     const blog = await prisma.post.update({
         where: {
             id: body.id
-        },  
+        },
         data: {
             title: body.title,
-            content: body.content
+            content: body.content,
+            category: body.category
         }
     })
 
@@ -109,11 +111,18 @@ blogRouter.get('/bulk', async (c) => {
             content: true,
             title: true,
             id: true,
+            authorId: true,
+            category: true,
+            createdAt: true,
             author: {
                 select: {
+                    id: true,
                     name: true
                 }
             }
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
     });
 
@@ -124,8 +133,7 @@ blogRouter.get('/bulk', async (c) => {
 
 blogRouter.get('/:id', async (c) => {
     const id = c.req.param("id");
-    
-    // Cleaned up
+
     const pool = new Pool({ connectionString: c.env.DATABASE_URL })
     const adapter = new PrismaPg(pool)
     const prisma = new PrismaClient({ adapter })
@@ -139,18 +147,22 @@ blogRouter.get('/:id', async (c) => {
                 id: true,
                 title: true,
                 content: true,
+                authorId: true,
+                category: true,
+                createdAt: true,
                 author: {
                     select: {
+                        id: true,
                         name: true
                     }
                 }
             }
         })
-    
+
         return c.json({
             blog
         });
-    } catch(e) {
+    } catch (e) {
         c.status(411);
         return c.json({
             message: "Error while fetching blog post"

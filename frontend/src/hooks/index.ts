@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
 
@@ -7,7 +7,10 @@ export interface Blog {
     "content": string;
     "title": string;
     "id": string;
+    "category": string;
+    "createdAt": string;
     "author": {
+        "id": string,
         "name": string
     }
 }
@@ -64,7 +67,7 @@ export const useBlogs = () => {
 
 export const useUser = () => {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<{ name: string, email: string } | null>(null);
+    const [user, setUser] = useState<{ id: string, name: string, email: string } | null>(null);
 
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/user/me`, {

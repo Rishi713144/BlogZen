@@ -1,9 +1,9 @@
+import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@prisma/client';
+import { signInInput, signUpInput } from "@rishikonar/medium-common";
 import { Hono } from "hono";
-import { PrismaClient } from '@prisma/client'
-import { PrismaPg } from '@prisma/adapter-pg'
-import { Pool } from 'pg'
-import { sign, verify } from 'hono/jwt'
-import { signUpInput, signInInput } from "@rishikonar/medium-common";
+import { sign, verify } from 'hono/jwt';
+import { Pool } from 'pg';
 
 export const userRouter = new Hono<{
     Bindings: {
@@ -17,7 +17,7 @@ userRouter.post('/signup', async (c) => {
         const body = await c.req.json();
         const result = signUpInput.safeParse(body);
         if (!result.success) {
-            c.status(400); 
+            c.status(400);
             return c.json({
                 message: "Inputs not correct",
                 errors: result.error
@@ -40,7 +40,7 @@ userRouter.post('/signup', async (c) => {
 
         return c.text(jwt)
     } catch (e) {
-        c.status(500); 
+        c.status(500);
         return c.json({
             error: "Internal Server Error",
             message: e instanceof Error ? e.message : String(e)
@@ -93,7 +93,7 @@ userRouter.get('/me', async (c) => {
 
     try {
         const user = await verify(token, c.env.JWT_SECRET, "HS256");
-        
+
         const pool = new Pool({ connectionString: c.env.DATABASE_URL })
         const adapter = new PrismaPg(pool)
         const prisma = new PrismaClient({ adapter })
@@ -103,6 +103,7 @@ userRouter.get('/me', async (c) => {
                 id: user.id as string
             },
             select: {
+                id: true,
                 name: true,
                 email: true
             }
@@ -116,7 +117,7 @@ userRouter.get('/me', async (c) => {
         return c.json({
             user: userDetails
         });
-    } catch(e) {
+    } catch (e) {
         c.status(403);
         return c.json({
             message: "You are not logged in"
